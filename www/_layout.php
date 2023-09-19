@@ -22,7 +22,7 @@ endif;
 			<a href="/" class="brand-logo">PV-111</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li if($page == 'about.php') echo 'class="active"'><a href="about">About</a></li>
-				<li if($page == 'forms.php') echo 'class="active"'><a href="forms">Forms</a></li>
+				<li if($page == 'forms_controller.php') echo 'class="active"'><a href="forms">Forms</a></li>
 				<li if($page == 'index.php') echo 'class="active"'><a href="index">Index</a></li>
 				<li if($page == 'db.php') echo 'class="active"'><a href="db">Db</a></li>
 				<li><a href="sass.html">Sass</a></li>

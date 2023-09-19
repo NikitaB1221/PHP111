@@ -1,88 +1,5 @@
-<?php
-$name_class = "validate";
-$reg_name = "";
-$lastname_class = "validate";
-$reg_lastname = "";
-$email_class = "validate";
-$reg_email = "";
-$telephone_class = "validate";
-$reg_telephone = "";
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // оброблення даних форми
-    // echo '<pre>' ; print_r( $_POST ) ; exit ;
-    // етап 1 - валідація
-    if (!isset($_POST['reg-name'])) { // наявність самих даних
-        $name_message = "No reg-name field";
-    } else {
-        $reg_name = $_POST['reg-name'];
-        if (strlen($reg_name) < 3) {
-            $name_message = "Name too short";
-        }
-    }
-    if (isset($name_message)) { // валідація імені не пройшла
-        $name_class = "invalid";
-    } else { // успішна валідація
-        $name_class = "valid";
-    }
-
-
-
-    if (!isset($_POST['reg-lastname'])) { // наявність самих даних
-        $lastname_message = "No reg-lastname field";
-    } else {
-        $reg_lastname = $_POST['reg-lastname'];
-        if (strlen($reg_lastname) < 3) {
-            $lastname_message = "lastname too short";
-        }
-    }
-    if (isset($lastname_message)) { // валідація імені не пройшла
-        $lastname_class = "invalid";
-    } else { // успішна валідація
-        $lastname_class = "valid";
-    }
-
-
-
-    if (!isset($_POST['reg-email'])) { // наявність самих даних
-        $email_message = "No reg-email field";
-    } else {
-        $reg_email = $_POST['reg-email'];
-        if (!filter_var($reg_email, FILTER_VALIDATE_EMAIL)) {
-            $email_message = "Invalid email format";
-        }
-    }
-    if (isset($email_message)) { // валідація імені не пройшла
-        $email_class = "invalid";
-    } else { // успішна валідація
-        $email_class = "valid";
-    }
-
-
-
-
-    if (!isset($_POST['reg-phone'])) { // Проверяем наличие самих данных
-        $telephone_message = "No reg-phone field";
-    } else {
-        $reg_telephone = $_POST['reg-phone'];
-        // Используем регулярное выражение для валидации номера телефона
-        if (!preg_match('/^(?:\+\d{10}|\d{7})$/', $reg_telephone)) {
-            $telephone_message = "Invalid phone number format";
-        }
-    }
-    if (isset($telephone_message)) { // валідація імені не пройшла
-        $telephone_class = "invalid";
-    } else { // успішна валідація
-        $telephone_class = "valid";
-    }
-
-
-
-}
-
-?>
 <div class="row">
-    <form class="col s12" method="post">
+    <form class="col s12" method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
@@ -121,6 +38,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <span class="helper-text" data-error="<?= $email_message ?>"></span>
                 <?php endif ?>
             </div>
+        </div>
+        <div class="row">
+            <div class="file-field input-field ">
+                <div class="btn purple">
+                    <span>File</span>
+                    <input type="file" name="reg-avatar">
+                </div>
+                <div class="file-path-wrapper">
+                    <input class="file-path validate" type="text" placeholder="Select avatar">
+                </div>
+            </div>
+            <?php if (!empty($reg_avatar)): ?>
+                <p>Uploaded Avatar: <img src="<?= $reg_avatar ?>" alt="Avatar"></p>
+            <?php endif; ?>
+            <?php if (isset($avatar_message)): ?>
+                <p class="red-text">
+                    <?= $avatar_message ?>
+                </p>
+            <?php endif; ?>
         </div>
         <div class="row center-align">
             <button class="waves-effect waves-light btn purple">
