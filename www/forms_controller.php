@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 // Сохранение файла на сервере
                 if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
                     // Файл успешно загружен на сервер
-                    $reg_avatar = "./www/img/" . $uniqueFileName; // Записываем путь к файлу в переменную
+                    $reg_avatar = '/img/' . $uniqueFileName; // Записываем путь к файлу в переменную
                 } else {
                     $avatar_message = "Error while saving the avatar file";
                 }
