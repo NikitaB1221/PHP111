@@ -1,3 +1,6 @@
+<?php if (isset($db_message)): ?>
+    <span class="helper-text"><?= $db_message ?></span>
+<?php endif ?>
 <div class="row">
     <form class="col s12" method="post" enctype="multipart/form-data">
         <div class="row">
@@ -13,7 +16,7 @@
                 <i class="material-icons prefix">badge</i>
                 <input id="reg-lastname" name="reg-lastname" type="text" class='<?= $lastname_class ?>'
                     value='<?= $reg_lastname ?>'>
-                <label for="reg-lastname">Last Name</label>
+                <label for="reg-lastname">Login</label>
                 <?php if (isset($lastname_message)): ?>
                     <span class="helper-text" data-error="<?= $lastname_message ?>"></span>
                 <?php endif ?>
@@ -21,10 +24,10 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <i class="material-icons prefix">phone</i>
-                <input id="reg-phone" name="reg-phone" type="tel" class='<?= $telephone_class ?>'
+                <i class="material-icons prefix">pin</i>
+                <input id="reg-phone" name="reg-phone" type="password" class='<?= $telephone_class ?>'
                     value='<?= $reg_telephone ?>'>
-                <label for="reg-phone">Telephone</label>
+                <label for="reg-phone">Password</label>
                 <?php if (isset($telephone_message)): ?>
                     <span class="helper-text" data-error="<?= $telephone_message ?>"></span>
                 <?php endif ?>
@@ -66,12 +69,12 @@
     </form>
 </div>
 <p>
-Особливості роботи з формами полягають у тому, що оновлення
-сторінки можи привести до повторної передачі даних. У разі
-POST запиту про це видається попередження, у разі GET - повтор
-автоматичний. Рекомендовано роботу з формами розділяти на 
-два етапи: 1) прийом і оброблення даних та 2) відображення.
-Між цими етапами сервер передає браузеру редирект і зберігає
-дані у сесії. При повторному запиті дані відновлюються і 
-відображаються.
+    Особливості роботи з формами полягають у тому, що оновлення
+    сторінки можи привести до повторної передачі даних. У разі
+    POST запиту про це видається попередження, у разі GET - повтор
+    автоматичний. Рекомендовано роботу з формами розділяти на
+    два етапи: 1) прийом і оброблення даних та 2) відображення.
+    Між цими етапами сервер передає браузеру редирект і зберігає
+    дані у сесії. При повторному запиті дані відновлюються і
+    відображаються.
 </p>

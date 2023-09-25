@@ -83,4 +83,23 @@ try {
 } catch (PDOException $ex) {
     echo $ex->getMessage();
 }
+
+$sql = <<<SQL
+CREATE TABLE IF NOT EXISTS users (
+  `id`       BIGINT       PRIMARY KEY,
+  `login`    VARCHAR(64)  NOT NULL,
+  `salt`     CHAR(16)     NOT NULL,
+  `pass_dk`  CHAR(40)     NOT NULL   COMMENT 'DK - derived key',
+  `name`     VARCHAR(128)     NULL,
+  `email`    VARCHAR(128)     NULL,
+  `avatar`   VARCHAR(512)     NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8
+SQL;
+try {
+  $db->query( $sql ) ;
+  echo 'CREATE OK' ;
+}
+catch( PDOException $ex ) {
+  echo $ex->getMessage() ;
+}
 ?>

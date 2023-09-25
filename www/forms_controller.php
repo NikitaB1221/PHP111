@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $name_message = "No reg-name field";
     } else {
         $reg_name = $_POST['reg-name'];
-        if (strlen($reg_name) < 3) {
+        if (strlen($reg_name) < 3 && strlen($reg_lastname) > 0) {
             $name_message = "Name too short";
         }
     }
@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $lastname_message = "No reg-lastname field";
     } else {
         $reg_lastname = $_POST['reg-lastname'];
-        if (strlen($reg_lastname) < 3) {
-            $lastname_message = "lastname too short";
+        if (strlen($reg_lastname) < 3 ) {
+            $lastname_message = "Login too short";
         }
     }
 
@@ -52,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $reg_telephone = $_POST['reg-phone'];
         // Используем регулярное выражение для валидации номера телефона
-        if (!preg_match('/^(?:\+\d{10}|\d{7})$/', $reg_telephone)) {
-            $telephone_message = "Invalid phone number format";
+        if (strlen($reg_telephone) < 3) {
+            $name_message = "Password too short";
         }
     }
 
-    if (!isset($_FILES['reg-avatar'])) {
+    if (isset($_FILES['reg-avatar'])) {
         $avatar_message = "No avatar file uploaded";
     } else {
         $file = $_FILES['reg-avatar'];
@@ -136,6 +136,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     }
+
+    // echo <<<TXT
+    //     Name: {$reg_name}
+    //     Login: {$reg_lastname}
+    //     Email: {$reg_email}
+    //     Password: {$reg_telephone}
+    //     avatar: {$reg_avatar}
+    // TXT;
+
+    if (empty($db)) {
+        echo 'Server error';
+        exit;
+    }
+
+    $salt = substr(md5(uniqid()), 0, 16);
+    $dk = sha1($salt . md5($_POST['reg-phone']));
+    $email = empty($_POST['reg-email'])
+        ? "NULL"
+        : "'{$_POST['reg-email']}'";
+
+    $avatar = empty($uniqueFileName)
+        ? "NULL"
+        : "'{$uniqueFileName}'";
+
+    $sql = <<<TXT
+    INSERT INTO users(`id`,`login`,`salt`,`pass_dk`,`name`,`email`,`avatar`)
+    VALUES( UUID_SHORT(), '{$reg_lastname}', '{$salt}', '{$dk}', 
+            '{$reg_name}', {$email}, {$avatar} )	
+    TXT;
+    try {
+        $db->query($sql);
+        $_SESSION['reg_db'] = true;
+    } catch (PDOException $ex) {
+        $_SESSION['reg_db'] = $ex->getMessage();
+    }
+
     // echo '<pre>' ; print_r($_FILES); exit;
 
     header('Location: ' . $_SERVER['REQUEST_URI']);
@@ -143,6 +179,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 } else {
     session_start();
     if (isset($_SESSION['form_data'])) {
+        if ($_SESSION['reg_db'] !== true) {
+            $db_message = $_SESSION['reg_db'];
+        } else {
+            $db_message = "Insert OK";
+        }
         if (isset($_SESSION['$name_message'])) {
             $name_message = $_SESSION['$name_message'];
             unset($_SESSION['$name_message']);
