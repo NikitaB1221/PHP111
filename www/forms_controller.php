@@ -57,9 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    if (isset($_FILES['reg-avatar'])) {
-        $avatar_message = "No avatar file uploaded";
-    } else {
+    if (isset($_FILES['reg-avatar'])) 
+     {
         $file = $_FILES['reg-avatar'];
 
         if ($file['error'] !== UPLOAD_ERR_OK) {
@@ -177,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Location: ' . $_SERVER['REQUEST_URI']);
     exit;
 } else {
-    session_start();
+    // session_start();
     if (isset($_SESSION['form_data'])) {
         if ($_SESSION['reg_db'] !== true) {
             $db_message = $_SESSION['reg_db'];

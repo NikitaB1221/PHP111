@@ -1,35 +1,46 @@
 <?php
-$login = $_GET['login'];
-if (!$login) {
-    echo "'login' not found";
-    exit;
-}
-
-$password = $_GET['password'];
-if (!$password) {
-    echo "'password' not found";
-    exit;
-}
-
-$db = new
-  PDO("mysql:host=localhost;dbname=pv111;
-  charset=UTF8", "pv111_user", "pv111_pass");
-
-  $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC) ;
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION) ;
-  $db->setAttribute(PDO::ATTR_PERSISTENT, true) ;
-
-$result = $db->query("SELECT * FROM users WHERE login = '$login'");
-if ($result->rowCount() > 0) {
-   
-    $user_info = $result->fetch();
-
+if ($_GET['lo'] == true) {
+	// session_destroy();
+	session_unset();
+	echo'Logout success!';
 } else {
+	if (empty($db)) {
+		http_response_code(500);
+		echo "Server error - empty DB";
+		exit;
+	}
+	if (empty($_GET['login'])) {
+		http_response_code(400);
+		echo "Parameter 'login' required";
+		exit;
+	}
+	$login = $_GET['login'];
+	$password = empty($_GET['password'])
+		? ''
+		: $_GET['password'];
 
-    echo "User with login - '$login' not found.";
+	$sql = "SELECT * FROM users u WHERE u.`login` = ?";
+	try {
+		$prep = $db->prepare($sql);
+		$prep->execute([$login]);
+		$row = $prep->fetch();
+	} catch (PDOException $ex) {
+		http_response_code(500);
+		echo "Server error - " . $ex->getMessage();
+		exit;
+	}
+	if ($row === false) {
+		http_response_code(403);
+		echo "Forbidden";
+		exit;
+	}
+	$dk = sha1($row['salt'] . md5($password));
+	if ($row['pass_dk'] == $dk) {
+		$_SESSION['auth-user-id'] = $row['id'];
+	} else {
+		http_response_code(403);
+		echo "Forbidden2";
+		exit;
+	}
 }
-
-echo json_encode($user_info);
-exit;
-
 ?>
