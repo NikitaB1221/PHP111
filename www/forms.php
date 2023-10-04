@@ -1,5 +1,7 @@
 <?php if (isset($db_message)): ?>
-    <span class="helper-text"><?= $db_message ?></span>
+    <span class="helper-text">
+        <?= $db_message ?>
+    </span>
 <?php endif ?>
 <div class="row">
     <form class="col s12" method="post" enctype="multipart/form-data">

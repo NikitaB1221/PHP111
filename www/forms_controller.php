@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $lastname_message = "No reg-lastname field";
     } else {
         $reg_lastname = $_POST['reg-lastname'];
-        if (strlen($reg_lastname) < 3 ) {
+        if (strlen($reg_lastname) < 3) {
             $lastname_message = "Login too short";
         }
     }
@@ -57,8 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    if (isset($_FILES['reg-avatar'])) 
-     {
+    if (isset($_FILES['reg-avatar'])) {
         $file = $_FILES['reg-avatar'];
 
         if ($file['error'] !== UPLOAD_ERR_OK) {

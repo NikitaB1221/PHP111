@@ -1,12 +1,12 @@
 <?php
-	$plain_array = [ 10, 20, 30, 40 ] ;
-	$data = [
-		'mon' => 10,
-		'tue' => 20,
-		'wed' => 15,
-		'thu' => 18,
-		'fri' => 7,
-	] ;
+$plain_array = [10, 20, 30, 40];
+$data = [
+	'mon' => 10,
+	'tue' => 20,
+	'wed' => 15,
+	'thu' => 18,
+	'fri' => 7,
+];
 ?>
 <h1>About</h1>
 <p>
@@ -37,26 +37,30 @@
 </p>
 
 <ul class="collection">
-<?php foreach( $plain_array as $val ) { ?>
+	<?php foreach ($plain_array as $val) { ?>
 		<li class="collection-item">
 			<?= $val ?>
 		</li>
-<?php } ?>
+	<?php } ?>
 </ul>
 
 <table>
-<thead>
-	<tr>
-		<th>day</th>
-		<th>profit</th>
-	</tr>
-</thead>
-<tbody>
-<?php foreach( $data as $day => $profit ) : ?>
-   <tr>
-       <td><?= $day ?></td>
-       <td><?= $profit ?></td>
-   </tr>
-<?php endforeach ?>
-</tbody>
+	<thead>
+		<tr>
+			<th>day</th>
+			<th>profit</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($data as $day => $profit): ?>
+			<tr>
+				<td>
+					<?= $day ?>
+				</td>
+				<td>
+					<?= $profit ?>
+				</td>
+			</tr>
+		<?php endforeach ?>
+	</tbody>
 </table>

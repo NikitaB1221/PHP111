@@ -2,7 +2,7 @@
 if ($_GET['lo'] == true) {
 	// session_destroy();
 	session_unset();
-	echo'Logout success!';
+	echo 'Logout success!';
 } else {
 	if (empty($db)) {
 		http_response_code(500);
