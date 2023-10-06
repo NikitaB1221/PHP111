@@ -56,14 +56,14 @@
 
 <?php
 try {
-    $db = new PDO(
-        "mysql:host=localhost;dbname=pv111;charset=UTF8",
-        "pv111_user",
-        "pv111_pass"
-    );
-    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $db->setAttribute(PDO::ATTR_PERSISTENT, true);
+    // $db = new PDO(
+    //     "mysql:host=localhost;dbname=pv111;charset=UTF8",
+    //     "pv111_user",
+    //     "pv111_pass"
+    // );
+    // $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    // $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // $db->setAttribute(PDO::ATTR_PERSISTENT, true);
 
     // Виконання запиту
     $query = "SELECT current_timestamp 

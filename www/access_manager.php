@@ -36,10 +36,9 @@ if ($uri != '/' && is_readable($path)) {
 
 $router_layout = [
 	// масив у РНР створюється [] або array()
-	'/index' => 'index.php',
+	
 	// масиви - асоціативні (схожі на об'єкти JS)
-	'/' => 'index.php',
-	'/about' => 'about.php',
+	
 ];
 $router_direct = [
 	// контролери - самі визначають відображення
@@ -48,6 +47,9 @@ $router_direct = [
 ];
 // $router_layout['/db'] = 'db.php'; // доповнення масиву новим елементом
 $router_oop = [
+	'/' => 'IndexController',
+	'/index' => 'IndexController',
+	'/about' => 'AboutController',
 	'/oop' => 'OopController',
 	'/db' => 'DBController',
 	'/auth' => 'AuthController',
