@@ -1,0 +1,70 @@
+CREATE TABLE product_groups (
+    `id`  BIGINT PRIMARY KEY  DEFAULT UUID_SHORT(),
+    `title` VARCHAR(64) NOT NULL,
+    `description` TEXT NULL,
+    `avatar` VARCHAR(256) NULL
+) ENGINE = InnoDB, DEFAULT CHARSET = UTF8
+
+CREATE TABLE product_actions (
+    `id`  BIGINT PRIMARY KEY  DEFAULT UUID_SHORT(),
+    `title` VARCHAR(64) NOT NULL,
+    `description` TEXT NULL,
+    `discount` FLOAT NOT NULL
+) ENGINE = InnoDB, DEFAULT CHARSET = UTF8
+
+CREATE TABLE products (
+    `id`  BIGINT PRIMARY KEY  DEFAULT UUID_SHORT(),
+    `id_group` BIGINT NOT NULL,
+    `title` VARCHAR(64) NOT NULL,
+    `description` TEXT NULL,
+    `avatar` VARCHAR(256) NULL,
+    `price`  FLOAT NOT NULL,
+    `id_action` BIGINT NULL
+) ENGINE = InnoDB, DEFAULT CHARSET = UTF8
+
+INSERT INTO product_groups (`title`) VALUES ('Glass products');
+INSERT INTO product_groups (`title`) VALUES ('Wood products');
+INSERT INTO product_groups (`title`) VALUES ('Stone products');
+INSERT INTO product_groups (`title`) VALUES ('Office products');
+
+
+
+INSERT INTO product () VALUES (id_group,title,avatar,price) VALUES ((SELECT id FROM product_groups WHERE title='Glass products'),'Christmas ball','glass1.png',300);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Glass products'),
+    'Christmas ball', 'glass1.png', 300
+)
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Glass products'),
+    'Glass bull', 'glass2.png', 300
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Glass products'),
+    'Sphere with a helicopter', 'glass3.png', 300
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Wood products'),
+    'Wooden basket', 'wood1.png', 300
+);
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Wood products'),
+    'Wooden mace', 'wood2.png', 1500
+);
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Wood products'),
+    'Wooden mug', 'wood3.png', 1000
+);
+
+ALTER TABLE `product_groups` 
+ADD `url` VARCHAR(32) CHARACTER 
+SET utf8 COLLATE utf8_unicode_ci NULL 
+AFTER `avatar`, 
+ADD UNIQUE `uri_index` (`url`);

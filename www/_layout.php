@@ -66,7 +66,7 @@ endif;
 			</ul>
 		</div>
 	</nav>
-	<div class="container">
+	<div class="row">
 		<?php include $page; ?>
 	</div>
 
@@ -99,51 +99,7 @@ endif;
 
 	<!-- Compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function () {
-			var elems = document.querySelectorAll('.modal');
-			var instances = M.Modal.init(elems, {});
-			const authButton = document.getElementById("auth-btn");
-			if (authButton) authButton.addEventListener('click', authClick);
-			else console.error("Element '#auth-btn' not found");
-			const logoutBtn = document.getElementById("logout-btn");
-			if (logoutBtn) logoutBtn.addEventListener('click', logoutClick);
-			else console.error("Element '#logout-btn' not available");
-		});
-		function authClick() {
-			const authLogin = document.getElementById("auth-login");
-			if (!authLogin) throw "Element '#auth-login' not found";
-			const authPassword = document.getElementById("auth-password");
-			if (!authPassword) throw "Element '#auth-password' not found";
-			const login = authLogin.value;
-			const password = authPassword.value;
-			if (login.length == 0) {
-				alert('Enter login');
-				return;
-			}
-			fetch(`/auth?login=${login}&password=${password}`, {
-				method: 'POST',
-			}).then(r => {
-				if (r.status != 200) {
-					const msg = document.getElementById('auth-rejected-message');
-					msg.style.visibility = 'visible';
-				}
-				else r.text().then(console.log).then(window.location.href = window.location.pathname);
-			});
-		}
-		function logoutClick() {
-			console.log("Logout click!");
-			fetch('/auth?lo=true', {
-				method: 'POST',
-			}).then(r => {
-				if (r.status != 200) {
-					const msg = document.getElementById('auth-rejected-message');
-					msg.style.visibility = 'visible';
-				}
-				else r.text().then(console.log).then(window.location.href = window.location.pathname);
-			});
-		}
-	</script>
+	<script src= /js/script.js></script>
 </body>
 <footer class="page-footer purple accent-3">
 	<div class="container">
@@ -171,5 +127,4 @@ endif;
 		</div>
 	</div>
 </footer>
-
 </html>
