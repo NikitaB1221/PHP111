@@ -24,8 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-
-
     if (!isset($_POST['reg-lastname'])) { // наявність самих даних
         $lastname_message = "No reg-lastname field";
     } else {
@@ -35,8 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-
-
     if (!isset($_POST['reg-email'])) { // наявність самих даних
         $email_message = "No reg-email field";
     } else {
@@ -45,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email_message = "Invalid email format";
         }
     }
-
 
     if (!isset($_POST['reg-phone'])) { // Проверяем наличие самих данных
         $telephone_message = "No reg-phone field";

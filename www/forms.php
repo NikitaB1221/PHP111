@@ -8,39 +8,36 @@
         <div class="row">
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
-                <input id="reg-name" name="reg-name" type="text" class='<?= $name_class ?>' value='<?= $reg_name ?>'>
+                <input id="reg-name" name="reg-name" type="text" class=<?= $view_data['reg-name']['class']?>  value=<?= $view_data['reg-name']['value']?>>
                 <label for="reg-name">First Name</label>
-                <?php if (isset($name_message)): ?>
-                    <span class="helper-text" data-error="<?= $name_message ?>"></span>
+                <?php if ($view_data['reg-name']['error']): ?>
+                    <span class="helper-text" data-error="<?= $view_data['reg-name']['error'] ?>"></span>
                 <?php endif ?>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">badge</i>
-                <input id="reg-lastname" name="reg-lastname" type="text" class='<?= $lastname_class ?>'
-                    value='<?= $reg_lastname ?>'>
+                <input id="reg-lastname" name="reg-lastname" type="text" class=<?= $view_data['reg-lastname']['class']?>  value=<?= $view_data['reg-lastname']['value']?>>
                 <label for="reg-lastname">Login</label>
-                <?php if (isset($lastname_message)): ?>
-                    <span class="helper-text" data-error="<?= $lastname_message ?>"></span>
+                <?php if ($view_data['reg-lastname']['error']): ?>
+                    <span class="helper-text" data-error="<?= $view_data['reg-lastname']['error'] ?>"></span>
                 <?php endif ?>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
                 <i class="material-icons prefix">pin</i>
-                <input id="reg-phone" name="reg-phone" type="password" class='<?= $telephone_class ?>'
-                    value='<?= $reg_telephone ?>'>
+                <input id="reg-phone" name="reg-phone" type="password" class=<?= $view_data['reg-phone']['class']?>  value=<?= $view_data['reg-phone']['value']?>>
                 <label for="reg-phone">Password</label>
-                <?php if (isset($telephone_message)): ?>
-                    <span class="helper-text" data-error="<?= $telephone_message ?>"></span>
+                <?php if ($view_data['reg-phone']['error']): ?>
+                    <span class="helper-text" data-error="<?= $view_data['reg-phone']['error'] ?>"></span>
                 <?php endif ?>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">mark_email_unread</i>
-                <input id="reg-email" name="reg-email" type="email" class='<?= $email_class ?>'
-                    value='<?= $reg_email ?>'>
+                <input id="reg-email" name="reg-email" type="email" class=<?= $view_data['reg-email']['class']?>  value=<?= $view_data['reg-email']['value']?>>
                 <label for="reg-email">Email</label>
-                <?php if (isset($email_message)): ?>
-                    <span class="helper-text" data-error="<?= $email_message ?>"></span>
+                <?php if ($view_data['reg-email']['error']): ?>
+                    <span class="helper-text" data-error="<?= $view_data['reg-email']['error'] ?>"></span>
                 <?php endif ?>
             </div>
         </div>

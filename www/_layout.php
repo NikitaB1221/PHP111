@@ -93,7 +93,7 @@ endif;
 				style="visibility:hidden;color:maroon;display:inline-block;width:50%;text-align:left">Authorization
 				denied</span>
 			<a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-			<a href="#!" id="auth-btn" class="waves-effect waves-green btn-flat">Enter</a>
+			<a href="#!" id="auth-button" class="waves-effect waves-green btn-flat">Enter</a>
 		</div>
 	</div>
 

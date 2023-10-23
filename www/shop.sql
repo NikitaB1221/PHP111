@@ -68,3 +68,46 @@ ADD `url` VARCHAR(32) CHARACTER
 SET utf8 COLLATE utf8_unicode_ci NULL 
 AFTER `avatar`, 
 ADD UNIQUE `uri_index` (`url`);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Stone products'),
+    'Stone candlesticks', 'stone1.png', 1000
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Stone products'),
+    'Stone pots', 'stone2.png', 1250
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Stone products'),
+    'Stone night light', 'stone3.png', 1150
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Office products'),
+    'Office chair', 'office1.png', 2500
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Office products'),
+    'Office table', 'office2.png', 3000
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Office products'),
+    'Office lamp', 'office3.png', 2350
+);
+
+INSERT INTO products (`id_group`, `title`, `avatar`, `price`)
+VALUES ( 
+    (SELECT id FROM product_groups WHERE `title`='Office products'),
+    'Office table clock', 'office4.png', 1245
+);
+
