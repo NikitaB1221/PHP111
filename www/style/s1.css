@@ -1,0 +1,17 @@
+body {
+    background-color: #fedfff;
+}
+
+code {
+    background-color: #323232;
+    color: snow;
+    font-size: large;
+    font-weight: 700;
+    padding: 3px 10px;
+}
+
+em {
+    background-color: #bababa;
+    font-size: large;
+    font-style: normal;
+}
