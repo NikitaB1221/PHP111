@@ -111,3 +111,11 @@ VALUES (
     'Office table clock', 'office4.png', 1245
 );
 
+INSERT INTO product_actions (`title`,`description`,`discount`)
+VALUES ('Halloween sale', 'Valid on the night of October 31-32', 10 );
+
+INSERT INTO product_actions (`title`,`description`,`discount`)
+VALUES ('New Year Sale', 'A week before and a week after the New Year', 15 );
+
+INSERT INTO product_actions (`title`,`description`,`discount`)
+VALUES ('Sale', 'Until the end of the product', 20 );

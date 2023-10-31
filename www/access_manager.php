@@ -36,9 +36,9 @@ if ($uri != '/' && is_readable($path)) {
 
 $router_layout = [
 	// масив у РНР створюється [] або array()
-	
+
 	// масиви - асоціативні (схожі на об'єкти JS)
-	
+
 ];
 // $router_direct = [
 // 	// контролери - самі визначають відображення
@@ -114,6 +114,12 @@ if (isset($_SESSION['auth-user-id'])) { // є дані авторизації
 	} else { // вкладаємо дані у контекст для доступності у подальшому коді
 		$_CONTEXT['user'] = $row;
 	}
+}
+
+if (isset($_CONTEXT['user']) && $_CONTEXT['user']['login'] == 'Moder') {
+	$_CONTEXT['admin_mode'] = true;
+} else {
+	$_CONTEXT['admin_mode'] = false;
 }
 if (isset($obj))
 	$obj->serve();
