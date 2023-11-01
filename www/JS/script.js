@@ -19,9 +19,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function adminDelete(productId) {
     if (confirm("Confirm product №" + productId + " deletion")) {
-        fetch(window.location.origin + window.location.pathname + `id=${productId}`, {
+        fetch(window.location.origin + window.location.pathname + `?id=${productId}`, {
             method: 'DELETE',
-        }).then(r => r.text()).then(console.log);
+        }).then(r => {if (r.status === 202) {
+            window.location.href = window.location.pathname;
+        }});
+    }
+}
+
+function adminRestore(productId) {
+    if (confirm("Confirm product №" + productId + " restore")) {
+        fetch(window.location.origin + window.location.pathname + `?id=${productId}`, {
+            method: 'PURGE',
+        }).then(r => {if (r.status === 202) {
+            window.location.href = window.location.pathname;
+        }});
     }
 }
 

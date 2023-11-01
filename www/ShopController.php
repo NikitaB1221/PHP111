@@ -46,6 +46,14 @@ class ShopController extends ApiController
 				$where .= " AND {$cond}";
 			}
 		}
+
+		if ($_CONTEXT['admin_mode'] == false) {
+			if ($where == "") {
+				$where = " WHERE delete_dt IS NULL ";
+			} else {
+				$where .= " AND WHERE delete_dt IS NULL ";
+			}
+		}
 		// Особливість пагінації - запит на вибірку не містить даних про загальний
 		// розмір даних. Для їх одержання потрібен додатковий запит, але з тими ж
 		// умовами (фільтрами), що й основний запит
@@ -166,7 +174,8 @@ class ShopController extends ApiController
 				$action_id,
 			]);
 			http_response_code(201);
-			echo 'add ok';
+
+			// echo 'add ok';
 
 		} catch (PDOException $ex) {
 			echo $ex->getMessage();
@@ -227,6 +236,7 @@ class ShopController extends ApiController
 			$prep = $db->query($sql);
 			http_response_code(202);
 			echo 'edit ok';
+			header("Refresh: 0");
 		} catch (PDOException $ex) {
 			http_response_code(500);
 			echo $ex->getMessage();
@@ -235,8 +245,39 @@ class ShopController extends ApiController
 		}
 	}
 
-	protected function delete_product()
+	protected function do_delete()
 	{
-		echo $_GET['id'];
+		$db = $this->get_db();
+		if (empty($_GET['id'])) {
+			$this->send_error(400, "Parameter 'id' required");
+		}
+		$sql = "UPDATE products SET delete_dt = CURRENT_TIMESTAMP WHERE id = ?";
+		try {
+			$prep = $db->prepare($sql);
+			$prep->execute([$_GET['id']]);
+			http_response_code(202); // Created
+			echo 'DELETE OK';
+		} catch (PDOException $ex) {
+			$this->log_error(__METHOD__ . "#" . __LINE__ . $ex->getMessage() . " {$sql}");
+			$this->send_error(500);
+		}
+	}
+
+	protected function do_purge()
+	{
+		$db = $this->get_db();
+		if (empty($_GET['id'])) {
+			$this->send_error(400, "Parameter 'id' required");
+		}
+		$sql = "UPDATE products SET delete_dt = NULL WHERE id = ?";
+		try {
+			$prep = $db->prepare($sql);
+			$prep->execute([$_GET['id']]);
+			http_response_code(202); // Restored
+			// echo 'PURGE OK';
+		} catch (PDOException $ex) {
+			$this->log_error(__METHOD__ . "#" . __LINE__ . $ex->getMessage() . " {$sql}");
+			$this->send_error(500);
+		}
 	}
 }

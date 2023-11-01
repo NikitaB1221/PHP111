@@ -28,7 +28,7 @@ if (is_array($products) && count($products) > 0) {
                 </a>
             <?php endforeach ?>
         </div>
-        <h4>За ціною</h4>
+        <h4>By Price</h4>
         <span>від</span> <input type="number" value="<?= $min_price ?>" id="min-price-input" />
         <span>до</span> <input type="number" value="<?= $max_price ?>" id="max-price-input" />
         <div class="row right-align">
@@ -41,7 +41,7 @@ if (is_array($products) && count($products) > 0) {
         <div class="row">
             <?php foreach ($products as $product): ?>
                 <div class="col" style='width: 200px; height: 340px;'>
-                    <div class="card">
+                    <div class="card" <?= is_null($product['delete_dt']) ? '' : 'style="opacity:.35"' ?>>
                         <div class="card-image">
                             <img src="/img/<?= empty($product['avatar']) ? "no-image.png" : $product['avatar'] ?>"
                                 style="height:150px">
@@ -69,7 +69,15 @@ if (is_array($products) && count($products) > 0) {
                         <div class="card-action right-align">
                             <?php if ($_CONTEXT['admin_mode']): ?>
                                 <a href="?admin-edit=<?= $product['id'] ?>"><i class="material-icons">edit_note</i></a>
-                                <a onclick="adminDelete('<?= $product['id']?>')"><i class="material-icons">delete_forever</i></a>
+                                <?php if (is_null($product['delete_dt'])): ?>
+                                    <a onclick="adminDelete('<?= $product['id'] ?>')">
+                                        <i class="material-icons">delete_forever</i>
+                                    </a>
+                                <?php else: ?>
+                                    <a onclick="adminRestore('<?= $product['id'] ?>')">
+                                        <i class="material-icons">recycling</i>
+                                    </a>
+                                <?php endif ?>
                             <?php else: ?>
                                 <i class="material-icons">visibility</i>
                                 <i style='display:inline-block;vertical-align:top;margin-right:20px'>123</i>
@@ -102,7 +110,12 @@ if (is_array($products) && count($products) > 0) {
                 <form id="add-form" method="post" enctype="multipart/form-data">
                     <div class="card-content">
                         <span class="card-title">
-                            <?= empty($edit_product) ? "Add Product" : "Edit Product" ?>
+                            <?php if ($is_edit): ?>
+                                Product Edit
+                                <?= is_null($edit_product['delete_dt']) ? 'Active' : 'Deleted ' . $edit_product['delete_dt'] ?>
+                            <?php else: ?>
+                                Product Add
+                            <?php endif ?>
                         </span>
 
                         <div class="row">
@@ -181,6 +194,9 @@ if (is_array($products) && count($products) > 0) {
                     </div>
                 </form>
                 <div class="card-action right-align">
+                    <?php if ($is_edit): ?>
+                        <a href="/shop" class="btn purple accent-3">Cancel</a>
+                    <?php endif ?>
                     <button class="btn purple accent-3" id="add-product-button" href="#">
                         <?= $is_edit ? "Save" : "Add to DB" ?>
                     </button>
