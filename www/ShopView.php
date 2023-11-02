@@ -1,8 +1,5 @@
 <?php
-// сторінка має надходити із запиту, а загальна кількість (last_page) - передаватись з контроллера
 
-
-// Визначаємо максимальну та мінімальну ціни з наявної вибірки
 if (is_array($products) && count($products) > 0) {
     $max_price = $products[0]['price'];
     $min_price = $max_price;
@@ -19,9 +16,9 @@ if (is_array($products) && count($products) > 0) {
 ?>
 <div class="row">
     <div class="col s2">
-        <h4>Групи товарів</h4>
+        <h4>Product groups</h4>
         <div class="collection">
-            <a href="?grp=all" class="collection-item">Усі</a>
+            <a href="?grp=all" class="collection-item">All</a>
             <?php foreach ($product_groups as $product_group): ?>
                 <a href="?grp=<?= $product_group['url'] ?>" class="collection-item">
                     <?= $product_group['title'] ?>
@@ -29,11 +26,11 @@ if (is_array($products) && count($products) > 0) {
             <?php endforeach ?>
         </div>
         <h4>By Price</h4>
-        <span>від</span> <input type="number" value="<?= $min_price ?>" id="min-price-input" />
-        <span>до</span> <input type="number" value="<?= $max_price ?>" id="max-price-input" />
+        <span>from</span> <input type="number" value="<?= $min_price ?>" id="min-price-input" />
+        <span>before</span> <input type="number" value="<?= $max_price ?>" id="max-price-input" />
         <div class="row right-align">
-            <button id="price-filter-button" title="Показати з встановленним обмеженням"
-                class="waves-effect waves-light btn purple accent-3"><i class="material-icons">savings</i></button>
+            <button id="price-filter-button" title="Show with installed boundaries"
+                class="waves-effect waves-light btn purple accent-3"><i class="material-icons">search</i></button>
         </div>
     </div>
 
@@ -68,7 +65,7 @@ if (is_array($products) && count($products) > 0) {
                         </div>
                         <div class="card-action right-align">
                             <?php if ($_CONTEXT['admin_mode']): ?>
-                                <a href="?admin-edit=<?= $product['id'] ?>"><i class="material-icons">edit_note</i></a>
+                                <a href="?admin-edit=<?= $product['id']?><?= isset( $_GET['min-price'])? "&min-price={$_GET['min-price']}" : ""?><?= isset( $_GET['max-price'])? "&max-price={$_GET['max-price']}" : ""?>&page=<?= isset($_GET['page']) ? intval($_GET['page']) : 1?>"><i class="material-icons">edit_note</i></a>
                                 <?php if (is_null($product['delete_dt'])): ?>
                                     <a onclick="adminDelete('<?= $product['id'] ?>')">
                                         <i class="material-icons">delete_forever</i>
@@ -144,7 +141,7 @@ if (is_array($products) && count($products) > 0) {
                                     <i class="material-icons prefix">receipt_long</i>
                                     <input name="description" id="add-description" type="text" class="validate"
                                         value="<?= $is_edit ? $edit_product['description'] : '' ?>">
-                                    <label for="add-description">Опис товару</label>
+                                    <label for="add-description">Product description</label>
                                 </div>
 
                                 <div class="col s6">

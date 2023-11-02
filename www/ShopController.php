@@ -3,6 +3,7 @@ include_once "ApiController.php";
 class ShopController extends ApiController
 {
 
+	
 	protected function do_get()
 	{
 		global $_CONTEXT;
@@ -231,12 +232,14 @@ class ShopController extends ApiController
 			$need_comma = true;
 		}
 		$sql .= " WHERE id={$_POST['edit-id']} ";
+		$current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 		$db = $this->get_db();
 		try {
 			$prep = $db->query($sql);
 			http_response_code(202);
 			echo 'edit ok';
-			header("Refresh: 0");
+
+			header("Location: http://www.pv111.loc/shop?page={$current_page}" . (isset( $_GET['min-price'])? "&min-price={$_GET['min-price']}" : "") . (isset( $_GET['max-price'])? "&max-price={$_GET['max-price']}" : ""));
 		} catch (PDOException $ex) {
 			http_response_code(500);
 			echo $ex->getMessage();
