@@ -120,3 +120,19 @@ VALUES ('New Year Sale', 'A week before and a week after the New Year', 15 );
 
 INSERT INTO product_actions (`title`,`description`,`discount`)
 VALUES ('Sale', 'Until the end of the product', 20 );
+
+
+CREATE TABLE shop_cart_order(
+    `id` BIGINT PRIMARY KEY DEFAULT UUID_SHORT(),
+    `id_user` BIGINT NULL,
+    `create_dt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `order_dt` DATETIME NULL,
+    `delete_dt` DATETIME NULL  
+) ENGINE = InnoDB, DEFAULT CHARSET = UTF8;
+
+CREATE TABLE shop_cart_item (
+    `id` BIGINT PRIMARY KEY DEFAULT UUID_SHORT(),
+    `id_cart` BIGINT NULL,
+    `id_product` BIGINT NOT NULL,
+    `count` INT NOT NULL DEFAULT 1
+) ENGINE = InnoDB, DEFAULT CHARSET = UTF8;

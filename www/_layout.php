@@ -51,7 +51,7 @@ endif;
 						<img class="circle" style="max-height:50px;margin:5px" src="/img/<?= $avatar ?>" alt="avatar" />
 					</li>
 					<li>
-						<a id="logout-btn" class="waves-effect waves-light btn purple accent-3" href="#">
+						<a id="logout-btn" class="waves-effect waves-light btn purple accent-3" href="/auth?logout">
 							<i class="material-icons">logout</i>
 						</a>
 					</li>

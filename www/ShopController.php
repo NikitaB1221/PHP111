@@ -3,7 +3,7 @@ include_once "ApiController.php";
 class ShopController extends ApiController
 {
 
-	
+
 	protected function do_get()
 	{
 		global $_CONTEXT;
@@ -128,6 +128,21 @@ class ShopController extends ApiController
 			}
 		}
 
+		if (isset($_CONTEXT["user"])) {
+			$id_user = $_CONTEXT['user']['id'];
+			$db = $this->get_db();
+			$sql = "SELECT * FROM shop_cart_order WHERE `id_user` = {$id_user} 
+                AND  `order_dt` is NULL AND `delete_dt` IS NULL";
+			try {
+				$res = $db->query($sql)->fetch();
+				$_CONTEXT['cart'] = $res;
+
+			} catch (PDOException $ex) {
+				$this->log_error("m: " . __METHOD__ . " | l: " . __LINE__ . " | error: " . $ex->getMessage());
+				$this->send_error(500);
+			}
+		}
+
 		$page = 'ShopView.php';
 		include '_layout.php';
 	}
@@ -239,7 +254,7 @@ class ShopController extends ApiController
 			http_response_code(202);
 			echo 'edit ok';
 
-			header("Location: http://www.pv111.loc/shop?page={$current_page}" . (isset( $_GET['min-price'])? "&min-price={$_GET['min-price']}" : "") . (isset( $_GET['max-price'])? "&max-price={$_GET['max-price']}" : ""));
+			header("Location: http://www.pv111.loc/shop?page={$current_page}" . (isset($_GET['min-price']) ? "&min-price={$_GET['min-price']}" : "") . (isset($_GET['max-price']) ? "&max-price={$_GET['max-price']}" : ""));
 		} catch (PDOException $ex) {
 			http_response_code(500);
 			echo $ex->getMessage();

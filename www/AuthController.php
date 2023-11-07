@@ -4,6 +4,15 @@ include_once "ApiController.php";
 
 class AuthController extends ApiController
 {
+    protected function do_get()
+    {
+        if (isset($_GET['logout'])) {
+            unset($_SESSION['auth-user-id']);
+            header('Location: /');
+            exit;
+        }
+
+    }
     protected function do_post()
     {
         if ($_GET['lo'] == true) {

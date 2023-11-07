@@ -15,15 +15,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const addProductButton = document.getElementById('add-product-button');
     if (addProductButton) addProductButton.addEventListener('click', addProductClick);
+
+    activateCartButtons();
 });
+
+function activateCartButtons() {
+    for (let button of document.querySelectorAll('[data-id-product]')) {
+        button.addEventListener('click', cartButtonClick);
+    }
+}
+function cartButtonClick(e) {
+    const btn = e.target.closest('[data-id-product]') 
+    
+    const idProduct = btn.getAttribute('data-id-product');
+    // console.log(idProduct);
+    fetch('/cart?id-product=' + idProduct, {
+        method: 'POST',
+    }).then(r => {
+        console.log(r.status);
+    });
+}
 
 function adminDelete(productId) {
     if (confirm("Confirm product №" + productId + " deletion")) {
         fetch(window.location.origin + window.location.pathname + `?id=${productId}`, {
             method: 'DELETE',
-        }).then(r => {if (r.status === 202) {
-            window.location.href = window.location.pathname;
-        }});
+        }).then(r => {
+            if (r.status === 202) {
+                window.location.href = window.location.pathname;
+            }
+        });
     }
 }
 
@@ -31,9 +52,11 @@ function adminRestore(productId) {
     if (confirm("Confirm product №" + productId + " restore")) {
         fetch(window.location.origin + window.location.pathname + `?id=${productId}`, {
             method: 'PURGE',
-        }).then(r => {if (r.status === 202) {
-            window.location.href = window.location.pathname;
-        }});
+        }).then(r => {
+            if (r.status === 202) {
+                window.location.href = window.location.pathname;
+            }
+        });
     }
 }
 

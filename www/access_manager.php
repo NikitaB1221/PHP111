@@ -50,6 +50,7 @@ $router_oop = [
 	'/' => 'IndexController',
 	'/index' => 'IndexController',
 	'/about' => 'AboutController',
+	'/cart' => 'CartController',
 	'/oop' => 'OopController',
 	'/db' => 'DBController',
 	'/auth' => 'AuthController',
