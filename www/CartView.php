@@ -11,20 +11,62 @@
     <?php else: ?>
         There will be your items.
         <table>
-            <tr>
-                <th>ID</th>
-                <th>ID_Cart</th>
-                <th>ID_Product</th>
-                <th>Count</th>
-            </tr>
-            <?php foreach ($_CONTEXT['orders'] as $item): ?>
+            <thead>
                 <tr>
-                    <td><?php echo $item['id']; ?></td>
-                    <td><?php echo $item['id_cart']; ?></td>
-                    <td><?php echo $item['id_product']; ?></td>
-                    <td><?php echo $item['count']; ?></td>
+                    <th>№</th>
+                    <th>Title</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                    <th>Price/Count</th>
                 </tr>
-            <?php endforeach; ?>
+            </thead>
+            <tbody>
+                <?php $cnt = 0;
+                $sum = 0;
+                foreach ($_CONTEXT['orders'] as $index => $item):
+                    $cnt += $item['count'];
+                    $sum += $item['price'] * $item['count']; ?>
+                    <tr>
+                        <td>
+                            <?= $index + 1 ?>
+                        </td>
+                        <td>
+                            <?= $item['title'] ?>
+                        </td>
+                        <td>
+                            <?= $item['count'] ?>
+                        </td>
+                        <td>
+                            <?= $item['price'] ?>
+                        </td>
+                        <td>
+                            <?= $item['price'] * $item['count'] ?>
+                        </td>
+                        <td>
+                            <button data-cart-inc="<?= $item['id_product'] ?>">
+                                <i class="material-icons">add_circle</i>
+                            </button>
+                            <button data-cart-dec="<?= $item['id_product'] ?>">
+                                <i class="material-icons">do_not_disturb_on</i>
+                            </button>
+                            <button data-cart-del="<?= $item['id_product'] ?>">
+                                <i class="material-icons">delete_forever</i>
+                            </button>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan=3>Full price</th>
+                    <td>
+                        <?= $cnt ?>
+                    </td>
+                    <td>
+                        <?= $sum ?>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     <?php endif ?>
 <?php endif ?>

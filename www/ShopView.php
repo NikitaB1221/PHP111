@@ -13,7 +13,13 @@ if (is_array($products) && count($products) > 0) {
     }
 }
 
+
 ?>
+
+<a href="/cart">
+    <i class="cart-fab purple material-icons white-text">shopping_cart</i>
+</a>
+
 <div class="row">
     <div class="col s2">
         <h4>Product groups</h4>

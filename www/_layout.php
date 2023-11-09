@@ -14,7 +14,7 @@ endif;
 	<!-- Import Google Icon Font -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<!-- Local styles -->
-	<link rel="stylesheet" href="/style.css" />
+	<link rel="stylesheet" href="/style/s1.css" />
 </head>
 
 <body>

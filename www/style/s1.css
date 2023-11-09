@@ -15,3 +15,17 @@ em {
     font-size: large;
     font-style: normal;
 }
+
+.cart-fab{
+    border-radius: 50%;
+    box-shadow: #bababa 3px 3px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    padding: 22px;
+    position: fixed;
+    right: 10px;
+    top: 77px;
+}

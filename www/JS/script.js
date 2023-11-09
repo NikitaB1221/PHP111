@@ -23,16 +23,87 @@ function activateCartButtons() {
     for (let button of document.querySelectorAll('[data-id-product]')) {
         button.addEventListener('click', cartButtonClick);
     }
+    // -- button
+    for (let button of document.querySelectorAll('[data-cart-dec]')) {
+        button.addEventListener('click', decrementButtonClick);
+    }
+    // + button
+    for (let button of document.querySelectorAll('[data-cart-inc]')) {
+        button.addEventListener('click', incrementButtonClick);
+    }
+    // Del button
+    for (let button of document.querySelectorAll('[data-cart-del]')) {
+        button.addEventListener('click', deleteButtonClick);
+    }
 }
+
+function decrementButtonClick(e) {
+    const btn = e.target.closest('[data-cart-dec]');
+    const idProduct = btn.getAttribute('data-cart-dec');
+    fetch('/cart?id-product=' + idProduct + "&decrement", {
+        method: 'PUT',
+    }).then(r => {
+        if (r.status < 400) {
+            window.location.reload();
+        }
+        else {
+            M.toast({ html: 'Error, try again latter' });
+        }
+    });
+}
+
+function incrementButtonClick(e) {
+    const btn = e.target.closest('[data-cart-inc]');
+    const idProduct = btn.getAttribute('data-cart-inc');
+    fetch('/cart?id-product=' + idProduct + "&increment", {
+        method: 'PUT',
+    }).then(r => {
+        if (r.status < 400) {
+            window.location.reload();
+        }
+        else {
+            M.toast({ html: 'Error, try again latter' });
+        }
+    });
+}
+
+function deleteButtonClick(e) {
+    const btn = e.target.closest('[data-cart-del]');
+    const idProduct = btn.getAttribute('data-cart-del');
+    fetch('/cart?id-product=' + idProduct + "&delete", {
+        method: 'PUT',
+    }).then(r => {
+        if (r.status < 400) {
+            window.location.reload();
+        }
+        else {
+            M.toast({ html: 'Error, try again latter' });
+        }
+    });
+}
+
 function cartButtonClick(e) {
-    const btn = e.target.closest('[data-id-product]') 
-    
+    const btn = e.target.closest('[data-id-product]')
+
     const idProduct = btn.getAttribute('data-id-product');
     // console.log(idProduct);
     fetch('/cart?id-product=' + idProduct, {
         method: 'POST',
     }).then(r => {
-        console.log(r.status);
+        switch (r.status) {
+            case 201: M.toast({ html: 'Item added to order' });
+
+                break;
+            case 202: M.toast({ html: 'Count updated' });
+
+                break;
+            case 500: M.toast({ html: 'Error, try again latter' });
+
+                break;
+
+            default: M.toast({ html: 'Unknown answer code' });
+                break;
+        }
     });
 }
 
@@ -126,6 +197,7 @@ function authClick() {
         });
     });
 }
+
 function priceFilterClick() {
     const minPriceInput = document.getElementById("min-price-input");
     if (!minPriceInput) throw "#min-price-input not found";
@@ -151,6 +223,7 @@ function priceFilterClick() {
         window.location.href += '?' + `min-price=${minPriceInput.value}&max-price=${maxPriceInput.value}`;
     }
 }
+
 function onHashChanged() {
     var hash = window.location.hash;
     var page;
